@@ -35,30 +35,19 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
             {
+                Intent intent;
                 switch (menuItem.getItemId())
                 {
                     case R.id.nav_surahs :
-                        Toast.makeText(getApplicationContext(),"Surah is Clicked",Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(HomeActivity.this, MainActivity.class);
+                         intent= new Intent(HomeActivity.this, MainActivity.class);
                         startActivity(intent);
-                        //drawerLayout.closeDrawer(GravityCompat.START);
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         break;
-//
-//                    case R.id.nav_return :
-//                        Toast.makeText(getApplicationContext(),"Retur is Clicked",Toast.LENGTH_LONG).show();
-//                        //drawerLayout.closeDrawer(GravityCompat.START);
-//                        break;
-//
-//                    case R.id.nav_laptop :
-//                        Toast.makeText(getApplicationContext(),"Laptop is clicked",Toast.LENGTH_LONG).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        break;
-//
-//                    case R.id.nav_voice :
-//                        Toast.makeText(getApplicationContext(),"Voice is clicked",Toast.LENGTH_LONG).show();
-//                        drawerLayout.closeDrawer(GravityCompat.START);
-//                        break;
-
+                    case R.id.nav_bookmarks:
+                        intent = new Intent(HomeActivity.this, BookmarksActivity.class);
+                        startActivity(intent);
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        break;
                     case R.id.nav_language:
                         Toast.makeText(getApplicationContext(),"Language is clicked",Toast.LENGTH_LONG).show();
                         drawerLayout.closeDrawer(GravityCompat.START);

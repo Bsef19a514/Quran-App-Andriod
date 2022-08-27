@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -17,19 +20,25 @@ public class MainActivity2 extends AppCompatActivity {
         
         
         surahListView = findViewById(R.id.surahListView);
-        QuranArabicText quranObj = new QuranArabicText();
-        String[] quranText=quranObj.QuranArabicText;
-        Intent intent = getIntent();
-        int startIndex = intent.getIntExtra("startIndex",0);
-        int endIndex = intent.getIntExtra("endIndex",0);
-         //  Log.d("TAG====", "onCreate: "+startIndex+" "+endIndex);
 
-        ArrayList<String> surah = new ArrayList<String>();
-        for (int i = startIndex-1; i < endIndex-1; i++) {
-            surah.add(quranText[i]);
-        }
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity2.this, android.R.layout.simple_list_item_1,surah);
+        Intent intent = getIntent();
+        int surahId=intent.getIntExtra("surahId",0);
+        DBhelper dbHelper= new DBhelper(MainActivity2.this,"QuranDB.db");
+        ArrayList<String> surah= dbHelper.getSurah(surahId);
         myAdapter myAdapter=new myAdapter(this, surah);
         surahListView.setAdapter(myAdapter);
+
+        surahListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                int ayahNo=i+1;
+                Log.d("======", "ayahNo= "+ayahNo );
+                Intent intent = new Intent(MainActivity2.this,MainActivity3.class);
+                intent.putExtra("surahId",surahId);
+                intent.putExtra("ayahNo",ayahNo);
+                startActivity(intent);
+            }
+        });
     }
 }
