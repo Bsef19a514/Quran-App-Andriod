@@ -13,11 +13,18 @@ tools:context=".MainActivity">
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tollbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#134e5c"
+        app:title="Navigation Drawer Demo"
+        app:titleTextColor="@color/cardview_light_background" />
     <ListView
         android:id="@+id/surahNamesListView"
         android:layout_width="409dp"
         android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="57dp" />
 

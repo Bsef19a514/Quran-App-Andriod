@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quran">
         <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BookmarksActivity2"
+            android:exported="false" />
+        <activity
             android:name=".BookmarksActivity"
             android:exported="false" />
         <activity

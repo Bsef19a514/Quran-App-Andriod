@@ -332,7 +332,7 @@ public class QDH {
             "عم یتسآءلون ",
     };
     public String[] englishSurahNames = {"Al-Fatihah",
-            "Al-Baqara ",
+            "Al-Baqara",
             "Al-i'Imran ",
             "An-Nisaa ",
             "Al-Maidah ",

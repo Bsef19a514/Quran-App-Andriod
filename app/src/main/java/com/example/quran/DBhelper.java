@@ -1,15 +1,11 @@
 package com.example.quran;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
@@ -84,8 +80,6 @@ public class DBhelper extends SQLiteOpenHelper {
         SQLiteDatabase db= this.getWritableDatabase();
         return db.delete("Bookmarks","Ayah=?",new String[]{ayah})>0;
     }
-
-
     public ArrayList<String> listBookmarks(){
             SQLiteDatabase db = this.getReadableDatabase();
             String query = "Select * from Bookmarks";
@@ -102,6 +96,22 @@ public class DBhelper extends SQLiteOpenHelper {
             cursor.close();
             return ayat;
     }
+    public ArrayList<ayahModel> listBookMarks(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "Select * from Bookmarks";
+        Cursor cursor = db.rawQuery(query, null);
+        ayahModel ayah;
+        ArrayList<ayahModel> ayat = new ArrayList<>();
+        if(cursor.moveToLast()){
+            do
+            {
+                ayah=new ayahModel(cursor.getString(1),cursor.getString(2),cursor.getString(3));
+                ayat.add(ayah);
+            }while (cursor.moveToPrevious());
+        }
+        cursor.close();
+        return ayat;
+    }
     public boolean findBookmark(String ayah){
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "Select * from Bookmarks where Ayah='"+ayah+"'";
@@ -112,4 +122,49 @@ public class DBhelper extends SQLiteOpenHelper {
         cursor.close();
         return false;
     }
+    public ayahModel2 getAyah(int ayahId){
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            String query = "Select * from " + TABLE_NAME + " where AyaID= "+ayahId+"";
+            Cursor cursor = db.rawQuery(query, null);
+            ayahModel2 ayah=new ayahModel2();
+            if (cursor.moveToFirst()) {
+                ayah.setAyahId(ayahId);
+                ayah.setAyahNo(cursor.getInt(2));
+                ayah.setSurahId(cursor.getInt(1));
+                ayah.setAyah(cursor.getString(3));
+                ayah.setUrduTranslation(cursor.getString(5));
+                ayah.setEnglishTranslation(cursor.getString(6));
+                cursor.close();
+                return ayah;
+            }
+        }catch(Exception e){
+            Log.d("error", "translateAyah: "+e);
+            System.out.println(e);
+        }
+        return null;
+    }
+
+//    public ayahModel2 getAyah(int surahNmae,int ayahNo){
+//        try {
+//            SQLiteDatabase db = this.getReadableDatabase();
+//            String query = "Select * from " + TABLE_NAME + " where AyaID= "+ayahId+"";
+//            Cursor cursor = db.rawQuery(query, null);
+//            ayahModel2 ayah=new ayahModel2();
+//            if (cursor.moveToFirst()) {
+//                ayah.setAyahId(ayahId);
+//                ayah.setAyahNo(cursor.getInt(2));
+//                ayah.setSurahId(cursor.getInt(1));
+//                ayah.setAyah(cursor.getString(3));
+//                ayah.setUrduTranslation(cursor.getString(5));
+//                ayah.setEnglishTranslation(cursor.getString(6));
+//                cursor.close();
+//                return ayah;
+//            }
+//        }catch(Exception e){
+//            Log.d("error", "translateAyah: "+e);
+//            System.out.println(e);
+//        }
+//        return null;
+//    }
 }
