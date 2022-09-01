@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
-
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,21 +47,35 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
             {
+
+
                 Intent intent;
                 switch (menuItem.getItemId())
                 {
                     case R.id.nav_home:
-                        finish();
-                        break;
-                    case R.id.nav_bookmarks:
-                        intent = new Intent(MainActivity.this, BookmarksActivity.class);
-                        startActivity(intent);
+                        Intent intents = new Intent(MainActivity.this, HomeActivity.class);
+                        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intents);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         finish();
                         break;
-                    case R.id.nav_search:
-                        intent = new Intent(MainActivity.this, SearchActivity.class);
-                        startActivity(intent);
+                    case R.id.nav_para :
+                        intents = new Intent(MainActivity.this, ParaNamesActivity.class);
+                        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intents);
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        finish();
+                        break;
+                    case R.id.nav_bookmarks:
+                        intents = new Intent(MainActivity.this, BookmarksActivity.class);
+                        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intents);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         finish();
                         break;
@@ -71,25 +85,49 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        surahNamesListView = findViewById(R.id.surahNamesListView);
+        surahNamesListView = findViewById(R.id.paraNamesListView);
+        searchView=findViewById(R.id.surahSearchView);
+
+
+
         QDH obj = new QDH();
-//        String[] surahNames=obj.englishSurahNames;
-        ArrayList<String> surahNames=new ArrayList<>();
+//        String englishSurahName;
+//        String urduSurahName;
+        surahNameModel surahName;
+        ArrayList<surahNameModel> surahNameList=new ArrayList<>();
         for(int i=0;i<obj.englishSurahNames.length;i++){
-            surahNames.add(i+1+". "+obj.englishSurahNames[i]);
+            surahName= new surahNameModel(obj.urduSurahNames[i],obj.englishSurahNames[i],i+1);
+            surahNameList.add(surahName);
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_list_item_1,surahNames);
-        surahNamesListView.setAdapter(arrayAdapter);
+
+
+        surahListAdapter surahNameAdapter = new surahListAdapter(MainActivity.this,surahNameList);
+        surahNamesListView.setAdapter(surahNameAdapter);
         surahNamesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String surahName=surahNamesListView.getItemAtPosition(i).toString();
-                int surahId=i+1;
+                surahNameModel sNameModel= (surahNameModel) surahNamesListView.getItemAtPosition(i);
+                int surahId=sNameModel.getSurahNo();
+                String surahEnglishName=sNameModel.getEnglishName();
+                String surahUrduName=sNameModel.getUrduName();
                 Intent intent = new Intent(MainActivity.this,MainActivity2.class);
                 intent.putExtra("surahId",surahId);
-                intent.putExtra("surahName",surahName);
+                intent.putExtra("surahEnglishName",surahEnglishName);
+                intent.putExtra("surahUrduName",surahUrduName);
                 startActivity(intent);
 
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                surahNameAdapter.filter(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
             }
         });
 

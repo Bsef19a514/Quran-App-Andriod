@@ -23,6 +23,8 @@
             app:titleTextColor="@color/cardview_light_background" />
 
         <ListView
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:id="@+id/ayahView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

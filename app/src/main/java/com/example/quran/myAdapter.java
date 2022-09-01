@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,7 +29,6 @@ public class myAdapter extends ArrayAdapter<String> {
 
 
         String ayat=getItem(position);
-//      System.out.println(ayat);
         TextView ayatView=convertView.findViewById(R.id.ayatTextView);
         Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.noorehuda);
         ayatView.setTypeface(typeface);

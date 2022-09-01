@@ -2,4 +2,10 @@
     <string name="app_name">Quran</string>
     <string name="open">Openning</string>
     <string name="close">Closing</string>
+    <string-array name="translations">
+        <item>FatehMuhammadJalandhri</item>
+        <item>MehmoodulHassan</item>
+        <item>DrMohsinKhan</item>
+        <item>MuftiTaqiUmani</item>
+    </string-array>
 </resources>

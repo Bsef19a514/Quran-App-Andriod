@@ -10,7 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quran">
         <activity
-            android:name=".SearchActivity"
+            android:name=".ParaNamesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".paraNamesActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".paraActivity3"
             android:exported="false" />
         <activity
             android:name=".BookmarksActivity2"
@@ -35,13 +41,7 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>

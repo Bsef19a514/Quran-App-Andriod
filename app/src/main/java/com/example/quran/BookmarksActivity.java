@@ -26,12 +26,6 @@ public class BookmarksActivity extends AppCompatActivity {
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
 
-//    @Override
-//    public void onBackPressed(){
-//        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-//            drawerLayout.closeDrawer(GravityCompat.START);
-//        }
-//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,21 +46,30 @@ public class BookmarksActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
             {
-                Intent intent;
+                Intent intents;
                 switch (menuItem.getItemId())
                 {
+
                     case R.id.nav_home:
+                        intents = new Intent(BookmarksActivity.this, HomeActivity.class);
+                        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intents);
+                        finish();
+                        break;
+                    case R.id.nav_para :
+                        intents = new Intent(BookmarksActivity.this, ParaNamesActivity.class);
+                        intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                                | Intent.FLAG_ACTIVITY_CLEAR_TOP
+                                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        startActivity(intents);
                         finish();
                         break;
                     case R.id.nav_surahs :
-                        intent= new Intent(BookmarksActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        drawerLayout.closeDrawer(GravityCompat.START);
-                        finish();
-                        break;
-                    case R.id.nav_search:
-                        intent = new Intent(BookmarksActivity.this, SearchActivity.class);
-                        startActivity(intent);
+                        intents= new Intent(BookmarksActivity.this, MainActivity.class);
+                        startActivity(intents);
                         drawerLayout.closeDrawer(GravityCompat.START);
                         finish();
                         break;
@@ -79,18 +82,21 @@ public class BookmarksActivity extends AppCompatActivity {
         bookMarksListView=findViewById(R.id.bookmarksListView);
         DBhelper db=new DBhelper(BookmarksActivity.this,"BookmarksDB.db");
 
-        ArrayList<ayahModel> bookmarks=db.listBookMarks();
+        ArrayList<ayahTranslationModel> bookmarks=db.listBookMarks();
         bookmarksListAdapter bookmarksAdapter=new bookmarksListAdapter(BookmarksActivity.this,bookmarks);
         bookMarksListView.setAdapter(bookmarksAdapter);
 
         bookMarksListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ayahModel clickedItem = (ayahModel) bookMarksListView.getItemAtPosition(i);
+                ayahTranslationModel clickedItem = (ayahTranslationModel) bookMarksListView.getItemAtPosition(i);
                 Intent intent = new Intent(BookmarksActivity.this,BookmarksActivity2.class);
                 intent.putExtra("ayah",clickedItem.getAyah());
-                intent.putExtra("urduT",clickedItem.getUrduTranslation());
-                intent.putExtra("englishT",clickedItem.getEnglishTranslation());
+                intent.putExtra("fatehMuhammadJalandhri",clickedItem.getFatehMuhammadJalandhri());
+                intent.putExtra("mehmoodUlHassan",clickedItem.getMehmoodUlHassanT());
+                intent.putExtra("drMohsinKhan",clickedItem.getDrMohsinKhanT());
+                intent.putExtra("muftiTaqiUsmani",clickedItem.getMuftiTaqiUsmaniT());
+                intent.putExtra("curretnT",clickedItem.currentT);
                 startActivity(intent);
             }
         });

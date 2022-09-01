@@ -10,161 +10,76 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class DBhelper extends SQLiteOpenHelper {
-   private String TABLE_NAME="tayah";
+    private String TABLE_NAME = "tayah";
 
-    public DBhelper(Context context,String dbName)
-    {
-        super(context,dbName,null,1);
+    public DBhelper(Context context, String dbName) {
+        super(context, dbName, null, 1);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase database){
-        String creteTableQuery="CREATE TABLE Bookmarks (ID Integer PRIMARY KEY AUTOINCREMENT, Ayah text, UrduTranslation text, EnglishTranslation text)";
+    public void onCreate(SQLiteDatabase database) {
+        String creteTableQuery = "CREATE TABLE Bookmarks (ID Integer PRIMARY KEY AUTOINCREMENT, Ayah text, FatehMuhammadJalandhri text, MehmoodUlHassan text, DrMohsinKhan text, MuftiTaqiUsmani text,CurrentT text)";
         database.execSQL(creteTableQuery);
+
+//        creteTableQuery="CREATE TABLE tayah (AyahID Integer , SuraID Integer, AyaNo Integer, ArabicText text, FatehMuhammadJalandri text, DrMohsinKhan text, MuftiTaqiUsmani text, RakuID Integer,PRakuID Integer, ParaID Integer )";
+//        database.execSQL(creteTableQuery);
+//
+//        creteTableQuery="CREATE TABLE surahNames (SurahID Integer , SuraIntro text, SurahNameE text, Nazool text, SurahNameU text)";
+//        database.execSQL(creteTableQuery);
         Log.d("onCreate", "onCreate: table created successfully");
     }
+
     @Override
-    public void onUpgrade(SQLiteDatabase database,int i,int j){
+    public void onUpgrade(SQLiteDatabase database, int i, int j) {
 
     }
-    public ArrayList<String> getSurah (int surahId){
-        try{
-            SQLiteDatabase db = this.getReadableDatabase();
-            String query = "Select * from " + TABLE_NAME + " where SuraID= " + surahId + " ";
-            Cursor cursor = db.rawQuery(query, null);
-            ArrayList<String> surah = new ArrayList<>();
-            while(cursor.moveToNext()){
-                surah.add(cursor.getString(3));
-            }
-            return surah;
-        }catch (Exception e){
-            System.out.println(e);
-        }
-        return null;
+
+    public int addBookmark(ayahTranslationModel ayah) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put("Ayah", ayah.getAyah());
+        cv.put("FatehMuhammadJalandhri", ayah.getFatehMuhammadJalandhri());
+        cv.put("MehmoodUlHassan", ayah.getMehmoodUlHassanT());
+        cv.put("DrMohsinKhan", ayah.getDrMohsinKhanT());
+        cv.put("MuftiTaqiUsmani", ayah.getMuftiTaqiUsmaniT());
+        cv.put("CurrentT", ayah.currentT);
+        int result = (int) db.insert("Bookmarks", null, cv);
+        db.close();
+        return result;
     }
-    public ayahModel translateAyah(int surahId, int ayaNo){
-        try {
-            SQLiteDatabase db = this.getReadableDatabase();
-            String query = "Select * from " + TABLE_NAME + " where SuraID= "+surahId+" and AyaNo= "+ayaNo+" ";
-            Cursor cursor = db.rawQuery(query, null);
-            ayahModel ayah=new ayahModel();
-            if (cursor.moveToFirst()) {
-                ayah.setAyah(cursor.getString(3));
-                ayah.setUrduTranslation(cursor.getString(5));
-                ayah.setEnglishTranslation(cursor.getString(6));
-                cursor.close();
-                return ayah;
-            }
-        }catch(Exception e){
-            Log.d("error", "translateAyah: "+e);
-            System.out.println(e);
-        }
-        return null;
-     }
 
 
-     public int addBookmark (ayahModel ayah){
-         SQLiteDatabase db = this.getWritableDatabase();
-         ContentValues cv = new ContentValues();
-
-         cv.put("Ayah", ayah.getAyah());
-         cv.put("UrduTranslation", ayah.getUrduTranslation());
-         cv.put("EnglishTranslation", ayah.getEnglishTranslation());
-         int result = (int) db.insert("Bookmarks", null, cv);
-         db.close();
-         return result;
-     }
-
-
-    public boolean deleteBookmark(String ayah){
-        SQLiteDatabase db= this.getWritableDatabase();
-        return db.delete("Bookmarks","Ayah=?",new String[]{ayah})>0;
+    public boolean deleteBookmark(String ayah) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("Bookmarks", "Ayah=?", new String[]{ayah}) > 0;
     }
-    public ArrayList<String> listBookmarks(){
-            SQLiteDatabase db = this.getReadableDatabase();
-            String query = "Select * from Bookmarks";
-            Cursor cursor = db.rawQuery(query, null);
-            String ayah;
-            ArrayList<String> ayat = new ArrayList<String>();
-            if(cursor.moveToLast()){
-                do
-                {
-                    ayah=cursor.getString(1);
-                    ayat.add(ayah);
-                }while (cursor.moveToPrevious());
-            }
-            cursor.close();
-            return ayat;
-    }
-    public ArrayList<ayahModel> listBookMarks(){
+
+    public ArrayList<ayahTranslationModel> listBookMarks() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "Select * from Bookmarks";
         Cursor cursor = db.rawQuery(query, null);
-        ayahModel ayah;
-        ArrayList<ayahModel> ayat = new ArrayList<>();
-        if(cursor.moveToLast()){
-            do
-            {
-                ayah=new ayahModel(cursor.getString(1),cursor.getString(2),cursor.getString(3));
+        ayahTranslationModel ayah;
+        ArrayList<ayahTranslationModel> ayat = new ArrayList<>();
+        if (cursor.moveToLast()) {
+            do {
+                ayah = new ayahTranslationModel(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
+                ayah.currentT = cursor.getString(6);
                 ayat.add(ayah);
-            }while (cursor.moveToPrevious());
+            } while (cursor.moveToPrevious());
         }
         cursor.close();
         return ayat;
     }
-    public boolean findBookmark(String ayah){
+
+    public boolean findBookmark(String ayah) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "Select * from Bookmarks where Ayah='"+ayah+"'";
+        String query = "Select * from Bookmarks where Ayah='" + ayah + "'";
         Cursor cursor = db.rawQuery(query, null);
-        if(cursor.moveToNext()){
-           return true;
+        if (cursor.moveToNext()) {
+            return true;
         }
         cursor.close();
         return false;
     }
-    public ayahModel2 getAyah(int ayahId){
-        try {
-            SQLiteDatabase db = this.getReadableDatabase();
-            String query = "Select * from " + TABLE_NAME + " where AyaID= "+ayahId+"";
-            Cursor cursor = db.rawQuery(query, null);
-            ayahModel2 ayah=new ayahModel2();
-            if (cursor.moveToFirst()) {
-                ayah.setAyahId(ayahId);
-                ayah.setAyahNo(cursor.getInt(2));
-                ayah.setSurahId(cursor.getInt(1));
-                ayah.setAyah(cursor.getString(3));
-                ayah.setUrduTranslation(cursor.getString(5));
-                ayah.setEnglishTranslation(cursor.getString(6));
-                cursor.close();
-                return ayah;
-            }
-        }catch(Exception e){
-            Log.d("error", "translateAyah: "+e);
-            System.out.println(e);
-        }
-        return null;
-    }
-
-//    public ayahModel2 getAyah(int surahNmae,int ayahNo){
-//        try {
-//            SQLiteDatabase db = this.getReadableDatabase();
-//            String query = "Select * from " + TABLE_NAME + " where AyaID= "+ayahId+"";
-//            Cursor cursor = db.rawQuery(query, null);
-//            ayahModel2 ayah=new ayahModel2();
-//            if (cursor.moveToFirst()) {
-//                ayah.setAyahId(ayahId);
-//                ayah.setAyahNo(cursor.getInt(2));
-//                ayah.setSurahId(cursor.getInt(1));
-//                ayah.setAyah(cursor.getString(3));
-//                ayah.setUrduTranslation(cursor.getString(5));
-//                ayah.setEnglishTranslation(cursor.getString(6));
-//                cursor.close();
-//                return ayah;
-//            }
-//        }catch(Exception e){
-//            Log.d("error", "translateAyah: "+e);
-//            System.out.println(e);
-//        }
-//        return null;
-//    }
 }

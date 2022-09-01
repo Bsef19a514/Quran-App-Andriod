@@ -13,6 +13,7 @@ tools:context=".MainActivity">
 <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tollbar"
         android:layout_width="match_parent"
@@ -20,11 +21,25 @@ tools:context=".MainActivity">
         android:background="#134e5c"
         app:title="Navigation Drawer Demo"
         app:titleTextColor="@color/cardview_light_background" />
+
+    <SearchView
+        android:id="@+id/surahSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/customized_searchview"
+        android:iconifiedByDefault="false"
+        android:inputType="text"
+        android:queryBackground="@null"
+        android:queryHint="Enter surah name" />
+
     <ListView
-        android:id="@+id/surahNamesListView"
+        android:id="@+id/paraNamesListView"
         android:layout_width="409dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="130dp"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="57dp" />
 

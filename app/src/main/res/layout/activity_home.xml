@@ -10,27 +10,70 @@
     tools:openDrawer="start">
 
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+<!--    <RelativeLayout-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/bookmarksBtn"
+            android:layout_width="350dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="31dp"
+            android:paddingStart="2dp"
+            android:text="Bookmarks"
+            android:textAllCaps="false"
+            android:textSize="22sp"
+            android:textStyle="normal"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/paraBtn" />
+
+        <Button
+            android:id="@+id/surahBtn"
+            android:layout_width="350dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="116dp"
+            android:layout_marginEnd="31dp"
+            android:text="Surahs"
+            android:textAllCaps="false"
+            android:textSize="22sp"
+            android:textStyle="normal"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tollbar" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tollbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#134e5c"
+            app:layout_constraintTop_toTopOf="parent"
             app:title="Navigation Drawer Demo"
             app:titleTextColor="@color/cardview_light_background" />
 
-        <ListView
-            android:id="@+id/surahNamesListView"
-            android:layout_width="409dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="55dp"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="57dp" />
-
-    </RelativeLayout>
+        <Button
+            android:id="@+id/paraBtn"
+            android:layout_width="350dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="13dp"
+            android:layout_marginEnd="31dp"
+            android:paddingStart="2dp"
+            android:text="Para"
+            android:textAllCaps="false"
+            android:textSize="22sp"
+            android:textStyle="normal"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/surahBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"

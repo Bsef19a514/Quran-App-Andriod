@@ -15,9 +15,9 @@ import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 
-public class bookmarksListAdapter extends ArrayAdapter<ayahModel> {
+public class bookmarksListAdapter extends ArrayAdapter<ayahTranslationModel> {
 
-    public bookmarksListAdapter(@NonNull Context context, ArrayList<ayahModel> bookmarks) {
+    public bookmarksListAdapter(@NonNull Context context, ArrayList<ayahTranslationModel> bookmarks) {
         super(context, 0,bookmarks);
     }
 
@@ -28,8 +28,8 @@ public class bookmarksListAdapter extends ArrayAdapter<ayahModel> {
         convertView= LayoutInflater.from(getContext()).inflate(R.layout.surahview,parent,false);
 
 
-        ayahModel ayat=getItem(position);
-//      System.out.println(ayat);
+        ayahTranslationModel ayat=getItem(position);
+
         TextView ayatView=convertView.findViewById(R.id.ayatTextView);
         Typeface typeface = ResourcesCompat.getFont(getContext(), R.font.noorehuda);
         ayatView.setTypeface(typeface);

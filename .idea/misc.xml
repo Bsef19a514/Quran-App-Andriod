@@ -3,19 +3,36 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Quran/app/src/main/res/drawable/customized_searchview.xml" value="0.1" />
+        <entry key="..\:/Quran/app/src/main/res/drawable/gradient_spinner.xml" value="0.1" />
+        <entry key="..\:/Quran/app/src/main/res/drawable/ic_baseline_arrow_drop_down_24.xml" value="0.1" />
+        <entry key="..\:/Quran/app/src/main/res/layout/activity_bookmarks.xml" value="0.2" />
+        <entry key="..\:/Quran/app/src/main/res/layout/activity_bookmarks2.xml" value="0.2" />
+        <entry key="..\:/Quran/app/src/main/res/layout/activity_home.xml" value="0.18177083333333333" />
+        <entry key="..\:/Quran/app/src/main/res/layout/activity_main.xml" value="0.19583333333333333" />
+        <entry key="..\:/Quran/app/src/main/res/layout/activity_main2.xml" value="0.2" />
+        <entry key="..\:/Quran/app/src/main/res/layout/activity_main3.xml" value="0.1078125" />
+        <entry key="..\:/Quran/app/src/main/res/layout/activity_para_names.xml" value="0.2" />
+        <entry key="..\:/Quran/app/src/main/res/layout/ayaview.xml" value="0.19583333333333333" />
+        <entry key="..\:/Quran/app/src/main/res/layout/bookmarksview.xml" value="0.2" />
+        <entry key="..\:/Quran/app/src/main/res/layout/surahlist_view.xml" value="0.19583333333333333" />
+        <entry key="..\:/Quran/app/src/main/res/layout/surahview.xml" value="0.1078125" />
+        <entry key="..\:/Quran/app/src/main/res/menu/main_menu.xml" value="0.33" />
+        <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/drawable/customized_searchview.xml" value="0.1" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/drawable/ic_heart_filled.xml" value="0.1" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/drawable/ic_heart_outline.xml" value="0.1" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/drawable/selector_favourite_item.xml" value="0.1" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/activity_bookmarks.xml" value="0.25" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/activity_bookmarks2.xml" value="0.33" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/activity_home.xml" value="0.2" />
-        <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/activity_main2.xml" value="0.25" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/activity_main3.xml" value="0.15" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/activity_search.xml" value="0.33" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/ayaview.xml" value="0.22" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/bookmarksview.xml" value="0.2" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/header.xml" value="0.2" />
+        <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/surahlist_view.xml" value="0.25" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/layout/surahview.xml" value="0.2" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/menu/main_menu.xml" value="0.2" />
         <entry key="..\:/Users/Zain/Downloads/Quran/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />

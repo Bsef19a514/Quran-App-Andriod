@@ -35,14 +35,18 @@
             android:layout_height="match_parent"
             android:isScrollContainer="false">
 
-            <!--            <androidx.appcompat.widget.Toolbar-->
-            <!--                android:id="@+id/tollbar"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:background="#134e5c"-->
-            <!--                app:layout_constraintTop_toTopOf="parent"-->
-            <!--                app:title="Navigation Drawer Demo"-->
-            <!--                app:titleTextColor="@color/cardview_light_background" />-->
+            <Spinner
+                android:id="@+id/changeTranslation"
+
+                style="@style/spinner_style"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="3dp"
+                android:layout_width="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/ayahTextView"
@@ -52,6 +56,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="TextView"
+                android:textColor="#070707"
                 android:textSize="34sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
@@ -66,26 +71,13 @@
                 android:paddingStart="10dp"
                 android:paddingRight="10dp"
                 android:text="TextView"
+                android:textAllCaps="false"
+                android:textColor="#134e5c"
                 android:textSize="34sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ayahTextView" />
-
-            <TextView
-                android:id="@+id/engTextView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingStart="10dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="20dp"
-                android:text="TextView"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/urduTextView" />
 
             <CheckBox
                 android:id="@+id/favChkBox"
