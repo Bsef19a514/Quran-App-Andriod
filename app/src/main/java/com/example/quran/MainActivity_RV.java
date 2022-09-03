@@ -2,10 +2,9 @@ package com.example.quran;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,27 +12,41 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 
-public class ParaNamesActivity extends AppCompatActivity {
-    ListView paraNamesListView;
+public class MainActivity_RV extends AppCompatActivity {
+    RecyclerView recyclerView;
+    myRecyclerViewAdapter adapter;
+    RecyclerView.LayoutManager layoutManager;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBarDrawerToggle toggle;
+
+    int surahId;
+    String surahEnglishName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_para_names);
+        setContentView(R.layout.activity_main_rv);
+
+        Intent intent = getIntent();
+        surahId=intent.getIntExtra("surahId",0);
+        surahEnglishName=intent.getStringExtra("surahEnglishName");
+        String surahUrduName=intent.getStringExtra("surahUrduName");
 
         navigationView=findViewById(R.id.nav_view);
         drawerLayout=findViewById(R.id.drawer);
 
         toolbar=(Toolbar)findViewById(R.id.tollbar);
-        toolbar.setTitle("Para");
+        String title=surahId+". "+surahEnglishName;
+        toolbar.setTitle(title);
         setSupportActionBar(toolbar);
 
         toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
@@ -44,11 +57,13 @@ public class ParaNamesActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem)
             {
+
+
                 Intent intent;
                 switch (menuItem.getItemId())
                 {
                     case R.id.nav_home:
-                        Intent intents = new Intent(ParaNamesActivity.this, HomeActivity.class);
+                        Intent intents = new Intent(MainActivity_RV.this, HomeActivity.class);
                         intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                 | Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -56,8 +71,8 @@ public class ParaNamesActivity extends AppCompatActivity {
                         drawerLayout.closeDrawer(GravityCompat.START);
                         finish();
                         break;
-                    case R.id.nav_surahs :
-                        intents = new Intent(ParaNamesActivity.this, MainActivity.class);
+                    case R.id.nav_para :
+                        intents = new Intent(MainActivity_RV.this, ParaNamesActivity.class);
                         intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                 | Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -66,7 +81,7 @@ public class ParaNamesActivity extends AppCompatActivity {
                         finish();
                         break;
                     case R.id.nav_bookmarks:
-                        intents = new Intent(ParaNamesActivity.this, BookmarksActivity.class);
+                        intents = new Intent(MainActivity_RV.this, BookmarksActivity.class);
                         intents.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                                 | Intent.FLAG_ACTIVITY_CLEAR_TOP
                                 | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -80,54 +95,42 @@ public class ParaNamesActivity extends AppCompatActivity {
             }
         });
 
-        paraNamesListView=findViewById(R.id.paraNamesRecycleView);
+
+        recyclerView = findViewById(R.id.surahRecycleView);
+        recyclerView.setHasFixedSize(true);
+
+         layoutManager = new LinearLayoutManager(MainActivity_RV.this);
+//        layoutManager=new LinearLayoutManager(MainActivity_RV.this,LinearLayoutManager.HORIZONTAL,true);
+        recyclerView.setLayoutManager(layoutManager);
+
+        DataBaseHelper db=DataBaseHelper.getInstance(getApplicationContext());
+        db.open();
+        ArrayList<String> surah= db.getSurah(surahId);
+        db.close();
+
+        adapter = new myRecyclerViewAdapter(surah) ;
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(onItemClickListener);
 
 
 
-        QDH obj = new QDH();
 
-
-        ParaClass paraModel;
-        ArrayList<ParaClass> paraNames=new ArrayList<>();
-        for(int i=0;i<obj.englishParahName.length;i++){
-            paraModel= new ParaClass();
-            paraModel.setParaNo(i+1);
-            paraModel.setEnglishPName(obj.englishParahName[i]);
-            paraModel.setUrduPName(obj.ParahName[i]);
-            paraModel.setParaSIndex(obj.getParahStart(i));
-            if(i!=obj.englishParahName.length-1){
-                paraModel.setParaEIndex(obj.getParahStart(i+1)-1);
-            }else{
-                paraModel.setParaEIndex(6236);
-            }
-
-            paraNames.add(paraModel);
-        }
-
-
-        paraListAdapter paraNameAdapter = new paraListAdapter(ParaNamesActivity.this,paraNames);
-        paraNamesListView.setAdapter(paraNameAdapter);
-        paraNamesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ParaClass para= (ParaClass) paraNamesListView.getItemAtPosition(i);
-                int paraNo=para.getParaNo();
-                int paraSIndex=para.getParaSIndex();
-                int paraEIndex=para.getParaEIndex();
-                String paraEName=para.getEnglishPName();
-                String paraUName=para.getUrduPName();
-
-                Intent intent = new Intent(ParaNamesActivity.this,paraNamesActivity2.class);
-                intent.putExtra("paraNo",paraNo);
-                intent.putExtra("paraSIndex",paraSIndex);
-                intent.putExtra("paraEIndex",paraEIndex);
-                intent.putExtra("paraEName",paraEName);
-                intent.putExtra("paraUName",paraUName);
-                startActivity(intent);
-
-            }
-        });
     }
+    View.OnClickListener onItemClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view){
+            RecyclerView.ViewHolder viewHolder = (RecyclerView.ViewHolder) view.getTag();
+            int position = viewHolder.getAdapterPosition();
 
+            int ayahNo=position+1;
+            Log.d("======", "ayahNo= "+ayahNo );
+            Intent intent = new Intent(MainActivity_RV.this,MainActivity3.class);
+            intent.putExtra("surahId",surahId);
+            intent.putExtra("ayahNo",ayahNo);
+            intent.putExtra("surahName",surahEnglishName);
+            startActivity(intent);
 
+        }
+    };
 }

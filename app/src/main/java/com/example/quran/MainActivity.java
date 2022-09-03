@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout=findViewById(R.id.drawer);
 
         toolbar=(Toolbar)findViewById(R.id.tollbar);
-        toolbar.setTitle("Surahs");
+        toolbar.setTitle("Surah");
         setSupportActionBar(toolbar);
 
         toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close);
@@ -85,14 +85,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        surahNamesListView = findViewById(R.id.paraNamesListView);
+        surahNamesListView = findViewById(R.id.paraNamesRecycleView);
         searchView=findViewById(R.id.surahSearchView);
 
 
 
         QDH obj = new QDH();
-//        String englishSurahName;
-//        String urduSurahName;
         surahNameModel surahName;
         ArrayList<surahNameModel> surahNameList=new ArrayList<>();
         for(int i=0;i<obj.englishSurahNames.length;i++){

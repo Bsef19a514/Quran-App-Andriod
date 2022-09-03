@@ -36,7 +36,7 @@ tools:context=".MainActivity">
         android:queryHint="Enter surah name" />
 
     <ListView
-        android:id="@+id/paraNamesListView"
+        android:id="@+id/paraNamesRecycleView"
         android:layout_width="409dp"
         android:layout_height="match_parent"
         android:layout_marginTop="130dp"
